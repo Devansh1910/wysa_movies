@@ -4,62 +4,54 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.hostelicloud.wysa_assignment.R
 import com.hostelicloud.wysa_assignment.model.Movie
-import com.hostelicloud.wysa_assignment.network.RetrofitInstance
-import kotlinx.coroutines.launch
+import com.hostelicloud.wysa_assignment.network.MoviePagingSource
+import kotlinx.coroutines.flow.Flow
 
 class MovieViewModel : ViewModel() {
 
+    // Carousel images LiveData
     private val _carouselImages = MutableLiveData<List<Int>>()
     val carouselImages: LiveData<List<Int>> get() = _carouselImages
 
-    private val _movies = MutableLiveData<List<Movie>>()
-    val movies: LiveData<List<Movie>> get() = _movies
-
+    // Loading status LiveData
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    // Error message LiveData
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
 
-    // New MutableLiveData to store liked movies
+    // Liked movies LiveData
     private val _likedMovies = MutableLiveData<MutableList<Movie>>(mutableListOf())
     val likedMovies: LiveData<MutableList<Movie>> get() = _likedMovies
 
     init {
-        // Initialize carousel images
+        // Initialize carousel images with placeholders
         _carouselImages.value = listOf(
             R.drawable.image1,
             R.drawable.image2
         )
-
-        // Fetch movies on initialization
-        fetchMovies("9f55240a79957004a278b1603aa6d403")
     }
 
-    fun fetchMovies(language: String?) {
-        _isLoading.value = true
-        viewModelScope.launch {
-            try {
-                val response = RetrofitInstance.api.getMovies(
-                    apiKey = "9f55240a79957004a278b1603aa6d403",
-                    language = language ?: "all"
-                )
-                if (response.isSuccessful) {
-                    _movies.value = response.body()?.results
-                    _error.value = null
-                } else {
-                    _error.value = "Failed to load movies"
-                }
-            } catch (e: Exception) {
-                _error.value = "Error: ${e.message}"
-            } finally {
-                _isLoading.value = false
-            }
-        }
+    // Function to get paginated movies with lazy loading
+    fun getMovies(language: String? = null): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 6,            // Load six items at a time
+                prefetchDistance = 3,     // Start fetching the next page when 3 items away
+                enablePlaceholders = false // Disable placeholders for better performance
+            ),
+            pagingSourceFactory = { MoviePagingSource(language) }
+        ).flow.cachedIn(viewModelScope)
     }
 
+    // Handle error state by clearing error LiveData
     fun errorHandled() {
         _error.value = null
     }
