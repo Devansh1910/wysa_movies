@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Wysa_Assignment" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/bottom_nav_icon_color</item>
+    </style>
+
+    <style name="Theme.Wysa_Assignment" parent="Base.Theme.Wysa_Assignment" />
+</resources>

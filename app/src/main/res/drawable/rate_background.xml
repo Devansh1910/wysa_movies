@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/black" /> <!-- Yellow color for the background -->
+    <corners android:radius="10dp" /> <!-- Adjust radius for the desired roundness -->
+    <size android:width="40dp" android:height="40dp" /> <!-- Set size according to icon size -->
+</shape>
