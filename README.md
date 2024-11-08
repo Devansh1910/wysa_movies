@@ -2,16 +2,6 @@
 
 An Android Application showcasing the latest movies with data from the TMDB API. This project is developed in **Kotlin** using the **MVVM architecture** as part of the Wysa Android Assessment. It features a sleek, modern UI and smooth performance, allowing users to explore and view movie details easily.
 
-## Features ✨
-
-- **Explore Latest Movies**: View a curated list of trending movies.
-- **Detailed View**: Get in-depth information on each movie, including release date, synopsis, rating, and more.
-- **Favorite Selection**: Mark and save favorite movies for quick access.
-- **Endless Scrolling**: Seamlessly browse through a continuous list of movies.
-- **Offline Access**: Access saved favorites offline with **RoomDB** integration.
-- **Jetpack Compose UI**: A responsive, modern UI built with Jetpack Compose.
-- **API Integration with Retrofit**: Reliable, high-performance network calls for fetching data.
-
 ## Screenshots 📸
 
 Explore the app's sleek and intuitive interface:
