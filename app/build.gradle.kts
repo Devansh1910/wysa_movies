@@ -68,4 +68,6 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.8.3")
     implementation ("androidx.navigation:navigation-ui-ktx:2.8.3")
 
+    implementation( "androidx.paging:paging-runtime:3.1.1")
+
 }
